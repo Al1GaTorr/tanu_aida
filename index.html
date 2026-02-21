@@ -1,0 +1,438 @@
+﻿<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tanu AI Test - узнай архитектуру своей личности</title>
+  <meta name="description" content="Tanu AI Test - современный личностный разбор в стиле MBTI и Gallup: глубина, ясность, практические шаги." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;700;800&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #f7f7f2;
+      --paper: #fffef7;
+      --ink: #111111;
+      --muted: #5f5f56;
+      --sun: #ffd466;
+      --mint: #97f0cf;
+      --ocean: #8eb9ff;
+      --coral: #ff9276;
+      --line: #151515;
+      --shadow: 0 16px 40px rgba(17, 17, 17, 0.12);
+      --radius-lg: 28px;
+      --radius-md: 18px;
+    }
+
+    * { box-sizing: border-box; }
+    html { -webkit-text-size-adjust: 100%; }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(80% 50% at 10% 0%, rgba(151, 240, 207, 0.65), transparent 70%),
+        radial-gradient(50% 35% at 90% 10%, rgba(142, 185, 255, 0.65), transparent 70%),
+        radial-gradient(40% 30% at 50% 100%, rgba(255, 146, 118, 0.45), transparent 75%),
+        var(--bg);
+      font-family: "Manrope", "Segoe UI", sans-serif;
+      line-height: 1.5;
+    }
+
+    .frame {
+      width: min(1140px, 92vw);
+      margin: 20px auto 64px;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: flex-end;
+      margin-bottom: 10px;
+    }
+
+    .lang-switch {
+      display: inline-flex;
+      gap: 8px;
+      border: 2px solid var(--line);
+      border-radius: 999px;
+      background: #fff;
+      padding: 4px;
+    }
+
+    .lang-link {
+      text-decoration: none;
+      color: var(--ink);
+      font-weight: 700;
+      font-size: 13px;
+      border-radius: 999px;
+      padding: 6px 10px;
+    }
+
+    .lang-link.active {
+      background: var(--sun);
+      border: 1px solid var(--line);
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      border: 3px solid var(--line);
+      border-radius: var(--radius-lg);
+      background: linear-gradient(120deg, var(--paper) 0%, #fffbe7 45%, #f5fff9 100%);
+      box-shadow: var(--shadow);
+      padding: clamp(22px, 4vw, 46px);
+    }
+
+    .hero::before,
+    .hero::after {
+      content: "";
+      position: absolute;
+      border: 3px solid var(--line);
+      border-radius: 999px;
+      transform: rotate(-8deg);
+    }
+
+    .hero::before {
+      width: 170px;
+      height: 170px;
+      right: -42px;
+      top: -42px;
+      background: var(--sun);
+    }
+
+    .hero::after {
+      width: 120px;
+      height: 120px;
+      right: 85px;
+      top: 42px;
+      background: var(--mint);
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 2px solid var(--line);
+      border-radius: 999px;
+      background: #fff;
+      padding: 8px 14px;
+      font-weight: 700;
+      font-size: 13px;
+      margin-bottom: 18px;
+    }
+
+    h1, h2, h3 { margin: 0; font-family: "Unbounded", "Segoe UI", sans-serif; line-height: 1.08; }
+
+    h1 {
+      max-width: 820px;
+      font-size: clamp(30px, 6vw, 62px);
+      letter-spacing: -0.02em;
+    }
+
+    .lead {
+      font-size: clamp(16px, 2.1vw, 22px);
+      margin: 18px 0 28px;
+      max-width: 790px;
+      color: #2b2b24;
+    }
+
+    .cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      align-items: center;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      text-decoration: none;
+      color: var(--ink);
+      font-weight: 800;
+      border: 3px solid var(--line);
+      background: var(--sun);
+      border-radius: 14px;
+      padding: 13px 18px;
+      min-height: 52px;
+      transition: transform .2s ease, box-shadow .2s ease;
+      box-shadow: 6px 6px 0 var(--line);
+    }
+
+    .button:hover { transform: translate(-2px, -2px); box-shadow: 9px 9px 0 var(--line); }
+
+    .button.secondary {
+      background: #fff;
+      box-shadow: none;
+      font-weight: 700;
+    }
+
+    .grid {
+      margin-top: 28px;
+      display: grid;
+      gap: 16px;
+      grid-template-columns: repeat(12, 1fr);
+    }
+
+    .card {
+      border: 2px solid var(--line);
+      border-radius: var(--radius-md);
+      background: #fff;
+      padding: 18px;
+    }
+
+    .card h3 { font-size: 22px; margin-bottom: 8px; }
+    .card p { margin: 0; color: var(--muted); font-size: 15px; }
+    .card.wide { grid-column: span 6; }
+    .card.tall { grid-column: span 3; }
+
+    .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      border: 2px solid var(--line);
+      display: inline-block;
+      margin-right: 8px;
+      vertical-align: middle;
+    }
+
+    .section {
+      margin-top: 24px;
+      border: 2px solid var(--line);
+      border-radius: var(--radius-lg);
+      background: #ffffffde;
+      padding: clamp(20px, 3vw, 34px);
+      backdrop-filter: blur(4px);
+    }
+
+    .section h2 { font-size: clamp(24px, 4vw, 40px); margin-bottom: 12px; }
+
+    .compare {
+      display: grid;
+      gap: 14px;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .pill {
+      border: 2px solid var(--line);
+      border-radius: 16px;
+      padding: 14px;
+      background: #fff;
+      min-height: 164px;
+    }
+
+    .pill strong {
+      display: inline-block;
+      font-family: "Unbounded", "Segoe UI", sans-serif;
+      margin-bottom: 8px;
+      font-size: 16px;
+    }
+
+    .report-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .report-item {
+      border: 2px solid var(--line);
+      border-radius: 14px;
+      background: #fff;
+      padding: 14px;
+    }
+
+    .report-item h3 {
+      font-size: clamp(18px, 2vw, 24px);
+      margin-bottom: 8px;
+    }
+
+    .report-item p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .faq {
+      display: grid;
+      gap: 10px;
+    }
+
+    details {
+      border: 2px solid var(--line);
+      border-radius: 14px;
+      background: #fff;
+      padding: 14px 16px;
+    }
+
+    summary {
+      cursor: pointer;
+      font-weight: 700;
+      list-style: none;
+      font-size: 16px;
+      position: relative;
+      padding-right: 26px;
+    }
+
+    summary::-webkit-details-marker { display: none; }
+    summary::after {
+      content: "+";
+      position: absolute;
+      right: 0;
+      top: 0;
+      font-size: 20px;
+      font-weight: 800;
+    }
+
+    details[open] summary::after { content: "-"; }
+    details p { margin: 8px 0 0; color: var(--muted); }
+
+    .final {
+      margin-top: 24px;
+      border: 3px solid var(--line);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      text-align: center;
+      background: linear-gradient(90deg, #fff8db 0%, #f2fffa 50%, #ecf3ff 100%);
+    }
+
+    .final p { margin: 10px 0 18px; color: #33332d; }
+
+    footer {
+      text-align: center;
+      color: #45453e;
+      margin-top: 14px;
+      font-size: 13px;
+    }
+
+    @media (max-width: 980px) {
+      .frame { width: min(1140px, 94vw); margin: 16px auto 48px; }
+      .hero, .section, .final { border-width: 2px; }
+      .hero::before { width: 122px; height: 122px; right: -38px; top: -34px; }
+      .hero::after { width: 84px; height: 84px; right: 58px; top: 34px; }
+      .grid { gap: 12px; }
+      .card.wide, .card.tall { grid-column: span 12; }
+      .compare, .report-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 640px) {
+      .frame { width: 94vw; margin: 10px auto 34px; }
+      .hero { padding: 18px 14px; }
+      .badge { font-size: 12px; padding: 7px 11px; margin-bottom: 12px; }
+      h1 { font-size: clamp(26px, 8vw, 38px); line-height: 1.12; }
+      .lead { font-size: 15px; margin: 12px 0 18px; }
+      .cta-row { display: grid; grid-template-columns: 1fr; width: 100%; gap: 10px; }
+      .button { width: 100%; box-shadow: 4px 4px 0 var(--line); }
+      .grid { margin-top: 18px; }
+      .card { padding: 14px; }
+      .card h3 { font-size: 19px; }
+      .section { margin-top: 18px; padding: 16px 14px; }
+      .section h2 { font-size: clamp(22px, 7vw, 30px); }
+      .pill { min-height: auto; }
+      summary { font-size: 15px; }
+      details p, .report-item p { font-size: 14px; }
+      .final { margin-top: 18px; padding: 18px 14px; }
+      .final p { margin: 8px 0 14px; }
+      footer { font-size: 12px; margin-top: 12px; }
+    }
+
+    @media (max-width: 420px) {
+      .hero::after { display: none; }
+      .hero::before { opacity: 0.55; }
+      h1 { font-size: clamp(24px, 9vw, 34px); }
+    }
+  </style>
+</head>
+<body>
+  <main class="frame">
+    <div class="topbar">
+      <nav class="lang-switch" aria-label="Переключение языка">
+        <a class="lang-link active" href="index.html">RU</a>
+        <a class="lang-link" href="ondex.html">KZ</a>
+      </nav>
+    </div>
+
+    <section class="hero">
+      <span class="badge">Tanu AI Test · Личность в фокусе</span>
+      <h1>Не просто тест.<br>Карта вашей личности, сильных сторон и внутреннего ритма.</h1>
+      <p class="lead">Если вам близки MBTI и Gallup, Tanu AI Test даст более живой и прикладной разбор: кто вы, как принимаете решения, где ваш ресурс и что мешает расти.</p>
+      <div class="cta-row">
+        <a class="button" href="#signup">Записаться на разбор</a>
+        <a class="button secondary" href="#faq">Смотреть FAQ</a>
+      </div>
+
+      <div class="grid">
+        <article class="card wide">
+          <h3><span class="dot" style="background: var(--coral)"></span>Что это?</h3>
+          <p>Tanu AI Test - интеллектуальный личностный анализ, который показывает ваш психотип, стиль мышления и модель взаимодействия с людьми.</p>
+        </article>
+        <article class="card wide">
+          <h3><span class="dot" style="background: var(--ocean)"></span>Зачем это нужно?</h3>
+          <p>Чтобы осознанно выбирать работу, строить отношения и принимать решения в согласии с собой, а не по чужим ожиданиям.</p>
+        </article>
+        <article class="card tall"><h3>15 мин</h3><p>время прохождения</p></article>
+        <article class="card tall"><h3>1:1</h3><p>разбор с экспертом</p></article>
+        <article class="card tall"><h3>AI + Human</h3><p>алгоритм + живая интерпретация</p></article>
+        <article class="card tall"><h3>Практично</h3><p>четкие шаги после теста</p></article>
+      </div>
+    </section>
+
+    <section class="section" id="report">
+      <h2>Что вы получите в репорте</h2>
+      <div class="report-grid">
+        <article class="report-item">
+          <h3>Tanu SAI в деталях</h3>
+          <p>Репорт раскрывает ваши сильные стороны, дает их пояснение, рекомендации и конкретную стратегию на будущее. Вы увидите целостный анализ личности и синергию своих талантов.</p>
+        </article>
+        <article class="report-item">
+          <h3>Уникальные таланты</h3>
+          <p>Мы фокусируемся на ключевых доменах, чтобы вы ясно понимали, как мыслите, что чувствуете и как действуете. Это помогает увереннее выбирать задачи и проекты.</p>
+        </article>
+        <article class="report-item">
+          <h3>Сильные стороны</h3>
+          <p>Репорт показывает, какие таланты и в каком направлении использовать. Вы понимаете, как они работают и как их развивать, чтобы раскрыть потенциал каждого.</p>
+        </article>
+        <article class="report-item">
+          <h3>План саморазвития</h3>
+          <p>Понимание своих талантов и потенциала - первый шаг. Дальше вы получаете понятный маршрут, который превращает способности в реальные результаты.</p>
+        </article>
+        <article class="report-item">
+          <h3>Комбинации талантов</h3>
+          <p>Разные сочетания талантов влияют на разные сферы жизни. Репорт показывает, как использовать эти комбинации максимально эффективно.</p>
+        </article>
+        <article class="report-item">
+          <h3>Скрытые зоны доменов</h3>
+          <p>Репорт помогает увидеть «слепые зоны», превратить уязвимости в точки роста и уверенно обходить препятствия на пути к цели.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="about">
+      <h2>Чем отличается от MBTI и Gallup</h2>
+      <div class="compare">
+        <div class="pill"><strong>MBTI</strong><p>Хорошо описывает тип, но часто даёт общую картину без контекста реальных задач.</p></div>
+        <div class="pill"><strong>Gallup</strong><p>Сильный фокус на талантах и рабочих паттернах. Отлично для карьеры, но меньше глубины по личным триггерам.</p></div>
+        <div class="pill"><strong>Tanu AI Test</strong><p>Объединяет психотип, мотивацию, ограничения и ресурсные стратегии. На выходе - конкретные шаги, что делать дальше.</p></div>
+      </div>
+    </section>
+
+    <section class="section" id="faq">
+      <h2>FAQ</h2>
+      <div class="faq">
+        <details><summary>Сколько длится процесс?</summary><p>Тест занимает около 15 минут. Разбор результатов обычно проходит за 45-60 минут онлайн.</p></details>
+        <details><summary>Нужно ли готовиться заранее?</summary><p>Нет. Достаточно спокойной обстановки и честных ответов. Чем искреннее ответы, тем точнее профиль.</p></details>
+        <details><summary>Для кого тест?</summary><p>Для студентов, специалистов, руководителей и всех, кто хочет лучше понимать себя и точнее принимать решения.</p></details>
+        <details><summary>Это замена терапии?</summary><p>Нет. Tanu AI Test - инструмент самопознания и развития, а не медицинская или психотерапевтическая услуга.</p></details>
+      </div>
+    </section>
+
+    <section class="final" id="signup">
+      <h2>Готовы узнать свой настоящий профиль?</h2>
+      <p>Оставьте заявку и получите персональный разбор Tanu AI Test.</p>
+      <a class="button" href="https://wa.me/87083640892" target="_blank" rel="noopener">Записаться в WhatsApp</a>
+    </section>
+
+    <footer>© 2026 Tanu AI Test · Лендинг о личностном разборе</footer>
+  </main>
+</body>
+</html>
