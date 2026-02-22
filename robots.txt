@@ -1,0 +1,5 @@
+﻿User-agent: *
+Allow: /
+
+Sitemap: https://tanu-aida.vercel.app/sitemap.xml
+
